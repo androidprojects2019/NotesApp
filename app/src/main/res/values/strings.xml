@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">NotesApp</string>
+    <string name="title_activity_notes">Notes</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
+    <string name="date">Date</string>
+    <string name="add">add</string>
+    <string name="note_added_successfully">Note added successfully</string>
+    <string name="ok">Ok</string>
+</resources>
