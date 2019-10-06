@@ -7,4 +7,6 @@
     <string name="add">add</string>
     <string name="note_added_successfully">Note added successfully</string>
     <string name="ok">Ok</string>
+    <string name="edit">Edit</string>
+    <string name="note_edited_successfully">note edited successfully</string>
 </resources>

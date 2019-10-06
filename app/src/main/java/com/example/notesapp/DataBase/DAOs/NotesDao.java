@@ -17,8 +17,8 @@ public interface NotesDao {
     @Insert
     void addNote(Note note);
 
-//    @Update()
-//    void updateNote(String title,String content,String dateTime);
+    @Query("Update note Set title =:title,content = :content,dateTime = :dateTime")
+    void updateNote(String title, String content, String dateTime);
 
     @Delete
     void deleteNote(Note note);

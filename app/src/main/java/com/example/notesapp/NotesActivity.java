@@ -23,6 +23,7 @@ public class NotesActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     NotesAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
+    public static Note commingNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,13 @@ public class NotesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         recyclerView = findViewById(R.id.recyclerView);
         adapter = new NotesAdapter(null);
+        adapter.setOnItemClickListener(new NotesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int pos, Note note) {
+                commingNote = note;
+                startActivity(new Intent(NotesActivity.this,EditNoteActivity.class));
+            }
+        });
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
