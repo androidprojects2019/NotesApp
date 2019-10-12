@@ -9,4 +9,6 @@
     <string name="ok">Ok</string>
     <string name="edit">Edit</string>
     <string name="note_edited_successfully">note edited successfully</string>
+    <string name="notes_channel">Notes app main channel</string>
+    <string name="channel_description">This channel to push notification for your notes</string>
 </resources>

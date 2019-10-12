@@ -2,8 +2,11 @@ package com.example.notesapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,7 +34,7 @@ public class AddNoteActivity extends BaseActivity implements View.OnClickListene
     }
 
     String noteTime= " ";
-
+    int hours,mins;
     public void onClick(View view) {
         if (view.getId() == R.id.add) {
             String titleS = title.getText().toString();
@@ -48,6 +51,7 @@ public class AddNoteActivity extends BaseActivity implements View.OnClickListene
                 MyDataBase.getInstance(this)
                         .notesDao()
                         .addNote(note);
+                addNoteAlarm();
                 showMessage(R.string.note_added_successfully, R.string.ok,
                         new DialogInterface.OnClickListener() {
                             @Override
@@ -68,11 +72,26 @@ public class AddNoteActivity extends BaseActivity implements View.OnClickListene
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     noteTime= hourOfDay+ " : "+minute;
                     datetime.setText(noteTime);
+                    hours = hourOfDay ;
+                    mins = minute;
                 }
             },calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE)
                     ,false);
             datePickerDialog.show();
         }
+    }
+
+    private void addNoteAlarm() {
+        Intent alarmIntent = new Intent(this,NoteAlarmBroadCastReciever.class);
+        alarmIntent.putExtra("title",title.getText().toString());
+        alarmIntent.putExtra("content",content.getText().toString());
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,0,alarmIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = ((AlarmManager) getSystemService(ALARM_SERVICE));
+        Calendar calendar  = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,hours);
+        calendar.set(Calendar.MINUTE,mins);
+        long difference = calendar.getTimeInMillis() - System.currentTimeMillis();
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP,System.currentTimeMillis()+difference,pendingIntent);
     }
 
     private void initView() {
